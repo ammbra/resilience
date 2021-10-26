@@ -3,9 +3,10 @@
 
 export GATEWAY_URL=$1
 
-
-for i in {1..90}
+for i in {1..30}
 do
-curl $GATEWAY_URL/activity/limited/5881028
+#curl -v $GATEWAY_URL/activity/timeout/5881028
+curl -v $GATEWAY_URL/activity/notavailable/5881028
+
 sleep 1
 done
