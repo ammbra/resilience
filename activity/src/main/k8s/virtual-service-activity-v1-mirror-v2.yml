@@ -4,13 +4,15 @@ metadata:
   name: activity
 spec:
   hosts:
-    - name: activity
+    - "*"
+  gateways:
+    - activity-gateway
   http:
-  - route:
-    - destination:
+    - route:
+        - destination:
+            host: activity
+            subset: version-v1
+      mirror:
         host: activity
-        subset: version-v1
-    mirror:
-      host: activity
-      subset: version-v2
+        subset: version-v2
 ---

@@ -3,6 +3,7 @@ package org.acme.entertainment;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -23,6 +24,7 @@ public class FrontendResource {
     private final Data data = new Data();
     
     @RestClient
+    @Inject
     BackendService backendService;
 
     @POST

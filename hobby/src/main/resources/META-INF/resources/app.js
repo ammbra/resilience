@@ -67,8 +67,6 @@ class Application {
 
         request.setRequestHeader("Content-Type", "application/json");
         request.send(json);
-
-        form.text.value = "";
     }
 
     renderResponses() {

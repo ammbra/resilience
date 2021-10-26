@@ -6,7 +6,7 @@ spec:
   host: activity
   trafficPolicy:
     loadBalancer:
-      simple: activity
+      simple: LEAST_CONN
   subsets:
   - labels:
       version: v1

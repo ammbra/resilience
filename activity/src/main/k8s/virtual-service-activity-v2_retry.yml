@@ -4,12 +4,14 @@ metadata:
   name: activity
 spec:
   hosts:
-    - name: activity
+    - "*"
+  gateways:
+    - activity-gateway
   http:
     - route:
         - destination:
             host: activity
       retries:
         attempts: 4
-        retryOn: 5xx
+        retryOn: retriable-4xx
 ---

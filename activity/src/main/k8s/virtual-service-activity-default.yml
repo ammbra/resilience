@@ -1,3 +1,4 @@
+---
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
@@ -8,13 +9,13 @@ spec:
   gateways:
     - activity-gateway
   http:
-    - route:
+    - match:
+        - uri:
+            prefix: /activity
+      rewrite:
+        uri: /activity
+      route:
         - destination:
             host: activity
-            subset: version-v1
-          weight: 75
-        - destination:
-            host: activity
-            subset: version-v2
-          weight: 25
----
+            port:
+              number: 8080

@@ -4,7 +4,9 @@ metadata:
   name: activity
 spec:
   hosts:
-    - activity
+    - "*"
+  gateways:
+    - activity-gateway
   http:
     - route:
         - destination:

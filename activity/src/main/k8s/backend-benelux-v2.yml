@@ -9,25 +9,6 @@ metadata:
     app.kubernetes.io/version: "2.0.0"
   name: "activity-v2"
 ---
-apiVersion: "v1"
-kind: "Service"
-metadata:
-  labels:
-    app: "activity"
-    version: "v2"
-    app.kubernetes.io/name: "activity"
-    app.kubernetes.io/version: "2.0.0"
-  name: "activity-v2"
-spec:
-  ports:
-  - name: "http"
-    port: 8080
-    targetPort: 8080
-  selector:
-    app.kubernetes.io/name: "activity"
-    app.kubernetes.io/version: "2.0.0"
-  type: "ClusterIP"
----
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
@@ -52,6 +33,8 @@ spec:
         version: "v2"
         app.kubernetes.io/name: "activity"
         app.kubernetes.io/version: "2.0.0"
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - env:
@@ -61,7 +44,7 @@ spec:
               fieldPath: "metadata.namespace"
         - name: "WORKER_CLOUD_ID"
           value: "BENELUX"
-        image: "quay.io/anasandbox/activity:1.0.0"
+        image: "quay.io/anasandbox/activity:1.0.1"
         imagePullPolicy: "IfNotPresent"
         name: "activity"
         ports:
@@ -75,30 +58,3 @@ spec:
           name: prometheus
           protocol: TCP
       serviceAccount: "activity"
----
-kind: Route
-apiVersion: route.openshift.io/v1
-metadata:
-  annotations:
-    openshift.io/host.generated: 'true'
-  name: backend-v2
-  labels:
-    app: activity
-    app.kubernetes.io/name: activity
-    app.kubernetes.io/version: 2.0.0
-    version: v2
-spec:
-  to:
-    kind: Service
-    name: activity
-    weight: 100
-  port:
-    targetPort: http
-  wildcardPolicy: None
-status:
-  ingress:
-    - routerName: default
-      conditions:
-        - type: Admitted
-          status: 'True'
-      wildcardPolicy: None

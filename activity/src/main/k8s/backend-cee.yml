@@ -61,11 +61,17 @@ spec:
               fieldPath: "metadata.namespace"
         - name: "WORKER_CLOUD_ID"
           value: "CEE"
-        image: "quay.io/anasandbox/activity:1.0.0"
+        image: "quay.io/anasandbox/activity:1.0.1"
         imagePullPolicy: "IfNotPresent"
         name: "activity"
         ports:
         - containerPort: 8080
           name: "http"
           protocol: "TCP"
+        - containerPort: 8778
+          name: jolokia
+          protocol: TCP
+        - containerPort: 9779
+          name: prometheus
+          protocol: TCP
       serviceAccount: "activity"

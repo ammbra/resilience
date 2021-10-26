@@ -14,9 +14,6 @@ kind: "Service"
 metadata:
   labels:
     app: "activity"
-    version: "v1"
-    app.kubernetes.io/name: "activity"
-    app.kubernetes.io/version: "1.0.0"
   name: "activity"
 spec:
   ports:
@@ -24,8 +21,7 @@ spec:
     port: 8080
     targetPort: 8080
   selector:
-    app.kubernetes.io/name: "activity"
-    app.kubernetes.io/version: "1.0.0"
+    app: "activity"
   type: "ClusterIP"
 ---
 apiVersion: "apps/v1"
@@ -35,7 +31,7 @@ metadata:
     app: "activity"
     version: "v1"
     app.kubernetes.io/name: "activity"
-    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/version: "1.0.1"
   name: "activity"
 spec:
   replicas: 1
@@ -52,6 +48,8 @@ spec:
         version: "v1"
         app.kubernetes.io/name: "activity"
         app.kubernetes.io/version: "1.0.0"
+      annotations:
+        sidecar.istio.io/inject: "true"
     spec:
       containers:
       - env:
@@ -84,9 +82,6 @@ metadata:
   name: backend
   labels:
     app: activity
-    app.kubernetes.io/name: activity
-    app.kubernetes.io/version: 1.0.0
-    version: v1
 spec:
   to:
     kind: Service

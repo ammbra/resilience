@@ -1,11 +1,10 @@
 package org.acme.entertainment;
 
 import io.github.bucket4j.*;
-import org.apache.http.HttpStatus;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
+import org.jboss.logging.Logger;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -18,6 +17,8 @@ import java.util.UUID;
 
 @Path("activity")
 public class RandomHobbyResource {
+
+    private final Logger logger = Logger.getLogger(getClass());
 
     @ConfigProperty(name = "worker.cloud.id", defaultValue = "unknown")
     String cloudId;
@@ -58,6 +59,7 @@ public class RandomHobbyResource {
         return service.getActivityByKey(key);
     }
 
+
     @GET
     @Path("limited/{key}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -75,6 +77,39 @@ public class RandomHobbyResource {
                 .header("X-Rate-Limit-Retry-After-Seconds", String.valueOf(waitForRefill))
                 .build();
     }
+
+    @GET
+    @Path("{issue}/{key}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response getHobbyByKey(@PathParam("issue") String issue, @PathParam("key") long key) {
+        return switch(issue){
+            case "timeout":
+                yield timeout(key);
+            case "notavailable":
+                yield invokeServiceUnavailable();
+            default:
+                yield Response.status(Response.Status.OK)
+                        .entity(service.getActivityByKey(key)).build();
+        };
+    }
+
+    private Response timeout(long key) {
+        logger.debug(String.format("Thread interrupted on %s", cloudId));
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            logger.info("Thread interrupted");
+        }
+
+        return Response.status(Response.Status.GATEWAY_TIMEOUT)
+                .entity(service.getActivityByKey(key)).build();
+    }
+
+    private Response invokeServiceUnavailable() {
+        logger.debug(String.format("Misbehaving %s", cloudId));
+        return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
+    }
+
 
 
 }
