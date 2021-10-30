@@ -17,8 +17,9 @@ public interface ActivityService {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Retry(maxRetries = 5, delay = 100)
-    @Timeout(250)
+    @CircuitBreaker(failureRatio=0.75, delay = 1000 )
+    @Timeout(150)
+    @Retry(maxRetries = 4, delay = 100)
     @Fallback(DefaultBasicHobby.class)
     BasicHobby getActivityByType(@QueryParam("type") String type);
 
