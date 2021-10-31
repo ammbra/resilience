@@ -3,9 +3,9 @@
 :home: https://github.com/ammbra/resilience
 
 * <<istio-examples, Istio Examples>>
-** <<simulate-traffic-without-circuit-breaker-enabled, Simulate trafic without circuit breaker enabled>>
-** <<simulate-traffic-with-circuit-breaker-enabled, Simulate trafic with circuit breaker enabled>>
-** <<simulate-traffic-with-priority, Simulate trafic with priority >>
+** <<simulate-trafic-without-circuit-breaker-enabled, Simulate trafic without circuit breaker enabled>>
+** <<simulate-trafic-with-circuit-breaker-enabled, Simulate trafic with circuit breaker enabled>>
+** <<simulate-trafic-with-priority, Simulate trafic with priority >>
 * <<skupper-examples,Skupper Examples>>
 * <<compatibility,Compatibility>>
 * <<license,License>>
