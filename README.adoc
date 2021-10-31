@@ -2,9 +2,9 @@
 
 :home: https://github.com/ammbra/resilience
 
-* <<istio-examples, Istio Examples>>
-** <<simulate-traffic-without-circuit-breaker-enabled, Simulate trafic without Circuit Breaker enabled>>
-** <<simulate-traffic-with-circuit-breaker-enabled, Simulate trafic with Circuit Breaker enabled>>
+* << istio-examples, Istio Examples>>
+** <<simulate-traffic-without-circuit-breaker-enabled, Simulate trafic without circuit breaker enabled>>
+** <<simulate-traffic-with-circuit-breaker-enabled, Simulate trafic with circuit breaker enabled>>
 ** <<simulate-traffic-with-priority, Simulate trafic with priority >>
 * <<skupper-examples,Skupper Examples>>
 * <<compatibility,Compatibility>>
@@ -19,20 +19,20 @@ Please follow the instructions located https://redhat-scholars.github.io/istio-t
 Once you have Istio installed, you can run the examples.
 
 
-==== Simulate trafic without Circuit Breaker enabled
+==== Simulate trafic without circuit breaker enabled
 
-Simply run  {home}/tree/main/simulate.sh[simulate.sh] or try one by one its commands.
+Simply run {home}/tree/main/simulate.sh[simulate.sh] or try one by one its commands.
 
-==== Simulate trafic with Circuit Breaker enabled
 
-Simply run   {home}/tree/main/simulate-traffic-with-cb-pattern.sh[simulate-traffic-with-cb-pattern.sh] or try one by one its commands.
+==== Simulate trafic with circuit breaker enabled
+
+Simply run {home}/tree/main/simulate-traffic-with-cb-pattern.sh[simulate-traffic-with-cb-pattern.sh] or try one by one its commands.
+
 
 ==== Simulate trafic with priority
 
-Simply run   {home}/tree/main/simulate-traffic-with-priority-agent.sh[simulate-traffic-with-priority-agent.sh] or try one by one its commands.
+Simply run {home}/tree/main/simulate-traffic-with-priority-agent.sh[simulate-traffic-with-priority-agent.sh] or try one by one its commands.
 
-
-'''
 
 === Skupper Example
 
@@ -98,7 +98,7 @@ skupper link create token.yaml
 '''
 === Compatibility
 
-The Java code in the repositories is compatible with Java17.
+The Java code in the repository is compatible with Java17.
 
 '''
 === License
