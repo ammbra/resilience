@@ -1,0 +1,106 @@
+= How to use the examples in this repo
+
+:home: https://github.com/ammbra/resilience
+
+* <<istio-examples, Istio Examples>>
+** <<simulate-traffic-without-circuit-breaker-enabled, Simulate trafic without Circuit Breaker enabled>>
+** <<simulate-traffic-with-circuit-breaker-enabled, Simulate trafic with Circuit Breaker enabled>>
+** <<simulate-traffic-with-priority, Simulate trafic with priority >>
+* <<skupper-examples,Skupper Examples>>
+* <<compatibility,Compatibility>>
+* <<license,License>>
+
+'''
+
+=== Istio Examples
+
+Please follow the instructions located https://redhat-scholars.github.io/istio-tutorial/istio-tutorial/1.6.x/1setup.html#istioinstallation[here]  to install Istio.
+
+Once you have Istio installed, you can run the examples.
+
+
+==== Simulate trafic without Circuit Breaker enabled
+
+Simply run  {home}/tree/main/simulate.sh[simulate.sh] or try one by one its commands.
+
+==== Simulate trafic with Circuit Breaker enabled
+
+Simply run   {home}/tree/main/simulate-traffic-with-cb-pattern.sh[simulate-traffic-with-cb-pattern.sh] or try one by one its commands.
+
+==== Simulate trafic with priority
+
+Simply run   {home}/tree/main/simulate-traffic-with-priority-agent.sh[simulate-traffic-with-priority-agent.sh] or try one by one its commands.
+
+
+'''
+
+=== Skupper Example
+
+If you want to try the Skupper examples, please follow these instalation instructions:
+
+==== Install Skupper
+
+[source, bash, subs="normal,attributes"]
+----
+# Windows
+curl -fL https://github.com/skupperproject/skupper/releases/download/0.7.0/skupper-cli-0.7.0-windows-amd64.zip
+unzip skupper-cli-0.7.0-windows-amd64.zip
+
+mkdir %UserProfile%\bin
+move skupper.exe %UserProfile%\bin
+set PATH=%PATH%;%UserProfile%\bin
+
+# Linux
+curl -fL https://github.com/skupperproject/skupper/releases/download/0.7.0/skupper-cli-0.7.0-linux-amd64.tgz | tar -xzf -
+mkdir $HOME/bin
+mv skupper $HOME/bin
+export PATH=$PATH:$HOME/bin
+
+# MacOs
+curl -fL https://github.com/skupperproject/skupper/releases/download/0.7.0/skupper-cli-0.7.0-mac-amd64.tgz | tar -xzf -
+mkdir $HOME/bin
+mv skupper $HOME/bin
+export PATH=$PATH:$HOME/bin
+----
+
+
+==== Deploy Services
+
+IMPORTANT: If you are using `minikube` as one cluster, run `minikube tunnel` in a new terminal.
+
+Deploy frontend and backend in BENELUX namespace:
+
+[source, bash, subs="normal,attributes"]
+----
+kubectl create ns benelux
+
+kubectl apply -f activity/src/main/k8s/backend-benelux.yml -n benelux
+kubectl annotate service activity skupper.io/proxy=http -n benelux
+kubectl config set-context $(kubectl config current-context) --namespace=benelux
+kubectl apply -f hobby/src/main/k8s/frontend.yml -n benelux
+skupper init --console-auth unsecured -n benelux
+skupper token create token.yaml -t cert
+----
+
+Do a similar installation of backend in the CEE and UKI namespaces:
+
+[source, shell-session]
+----
+kubectl create ns cee
+
+kubectl apply -f activity/src/main/k8s/backend-cee.yml -n cee
+kubectl annotate service activity skupper.io/proxy=http -n cee
+kubectl config set-context $(kubectl config current-context) --namespace=cee
+skupper init  -n cee
+skupper link create token.yaml
+----
+
+'''
+=== Compatibility
+
+The Java code in the repositories is compatible with Java17.
+
+'''
+=== License
+
+This code is dedicated to the public domain to the maximum extent permitted by applicable law, pursuant to http://creativecommons.org/publicdomain/zero/1.0/[CC0].
