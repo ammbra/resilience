@@ -6,7 +6,7 @@
 ** <<simulate-trafic-without-circuit-breaker-enabled, Simulate trafic without circuit breaker enabled>>
 ** <<simulate-trafic-with-circuit-breaker-enabled, Simulate trafic with circuit breaker enabled>>
 ** <<simulate-trafic-with-priority, Simulate trafic with priority >>
-* <<skupper-examples,Skupper Examples>>
+* <<skupper-example,Skupper Example>>
 * <<compatibility,Compatibility>>
 * <<license,License>>
 
