@@ -59,6 +59,12 @@ public class RandomHobbyResource {
         return service.getActivityByKey(key);
     }
 
+    @GET
+    @Path("/type/{type}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public BasicHobby getHobbyByType(@PathParam("type") String type) {
+        return service.getActivityByType(type);
+    }
 
     @GET
     @Path("limited/{key}")
