@@ -21,4 +21,4 @@ kubectl delete destinationrule activity
 kubectl apply -f activity/src/main/k8s/destination-rule-activity-v1-v2.yml
 kubectl apply -f activity/src/main/k8s/virtual-service-activity-default.yml
 
-siege -r 10 -c 5 -v  $GATEWAY_URL/activity/timeout/5881028
+siege -r 10 -c 4 -v  $GATEWAY_URL/activity/timeout/5881028

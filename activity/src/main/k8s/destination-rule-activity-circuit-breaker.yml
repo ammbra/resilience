@@ -16,11 +16,11 @@ spec:
       simple: ROUND_ROBIN
     connectionPool:
       http:
-        http1MaxPendingRequests: 3
-        http2MaxRequests: 3
-        maxRequestsPerConnection: 3
+        http1MaxPendingRequests: 1
+        http2MaxRequests: 1
+        maxRequestsPerConnection: 1
       tcp:
-        maxConnections: 5
+        maxConnections: 4
     outlierDetection:
       baseEjectionTime: 3m
       consecutiveErrors: 1
