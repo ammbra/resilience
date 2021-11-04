@@ -6,8 +6,8 @@ export GATEWAY_URL=$(kubectl get route istio-ingressgateway -n istio-system -o j
 
 for i in {1..30}
 do
-#curl -v $GATEWAY_URL/activity/timeout/5881028
-curl -v $GATEWAY_URL/activity/notavailable/5881028
+curl -v $GATEWAY_URL/activity/timeout/5881028
+#curl -v $GATEWAY_URL/activity/notavailable/5881028
 
 sleep 1
 done

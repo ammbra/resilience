@@ -3,6 +3,10 @@ kubectl apply -f activity/src/main/k8s/backend-benelux-v2.yml
 
 kubectl apply -f activity/src/main/k8s/backend-benelux.yml
 
+####uncomment these lines if you are not using OpenShift####
+#kubectl apply -f <(istioctl kube-inject -f activity/src/main/k8s/backend-benelux-v2.yml)
+#kubectl apply -f <(istioctl kube-inject -f activity/src/main/k8s/backend-benelux.yml)
+
 kubectl apply -f activity/src/main/k8s/gateway.yaml
 
 ###ONLY for OpenShift; comment the line below if working in a different environment

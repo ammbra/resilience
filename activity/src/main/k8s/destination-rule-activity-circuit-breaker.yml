@@ -8,9 +8,9 @@ spec:
   - labels:
       version: v1
     name: version-v1
-  - labels:
-      version: v2
-    name: version-v2
+#  - labels:
+#      version: v2
+#    name: version-v2
   trafficPolicy:
     loadBalancer:
       simple: ROUND_ROBIN
@@ -22,7 +22,7 @@ spec:
       tcp:
         maxConnections: 5
     outlierDetection:
-      baseEjectionTime: 30s
-      consecutiveErrors: 2
-      interval: 2s
+      baseEjectionTime: 3m
+      consecutiveErrors: 1
+      interval: 1s
       maxEjectionPercent: 100
