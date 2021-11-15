@@ -6,7 +6,12 @@ spec:
   host: activity
   trafficPolicy:
     loadBalancer:
-      simple: LEAST_CONN
+      simple: ROUND_ROBIN
+      localityLbSetting:
+        enabled: true
+        failover:
+          - from: v1
+            to: v2
   subsets:
   - labels:
       version: v1

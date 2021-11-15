@@ -19,6 +19,11 @@ Please follow the instructions located https://redhat-scholars.github.io/istio-t
 Once you have Istio installed, you can run the examples.
 
 
+==== Simulate trafic with load balancing
+
+Simply run {home}/tree/main/simulate-lb.sh[simulate-lb.sh] or try one by one its commands.
+
+
 ==== Simulate trafic without circuit breaker enabled
 
 Simply run {home}/tree/main/simulate.sh[simulate.sh] or try one by one its commands.

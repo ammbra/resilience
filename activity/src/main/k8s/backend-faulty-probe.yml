@@ -1,0 +1,108 @@
+---
+apiVersion: "v1"
+kind: "ServiceAccount"
+metadata:
+  labels:
+    app: "activity"
+    version: "v1"
+    app.kubernetes.io/name: "activity"
+    app.kubernetes.io/version: "1.0.0"
+  name: "activity"
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  labels:
+    app: "activity"
+  name: "activity"
+spec:
+  ports:
+  - name: "http"
+    port: 8080
+    targetPort: 8080
+  selector:
+    app: "activity"
+  type: "ClusterIP"
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  labels:
+    app: "activity"
+    version: "v1"
+    app.kubernetes.io/name: "activity"
+    app.kubernetes.io/version: "1.0.1"
+  name: "activity"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "activity"
+      version: "v1"
+      app.kubernetes.io/name: "activity"
+      app.kubernetes.io/version: "1.0.0"
+  template:
+    metadata:
+      labels:
+        app: "activity"
+        version: "v1"
+        app.kubernetes.io/name: "activity"
+        app.kubernetes.io/version: "1.0.0"
+      annotations:
+        sidecar.istio.io/inject: "true"
+    spec:
+      containers:
+      - env:
+        - name: "KUBERNETES_NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: "metadata.namespace"
+        - name: "WORKER_CLOUD_ID"
+          value: "BENELUX"
+        image: "quay.io/anasandbox/activity:1.0.1"
+        imagePullPolicy: "IfNotPresent"
+        name: "activity"
+        ports:
+        - containerPort: 8080
+          name: "http"
+          protocol: "TCP"
+        - containerPort: 8778
+          name: jolokia
+          protocol: TCP
+        - containerPort: 9779
+          name: prometheus
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /healthy/living
+            port: 80
+            scheme: HTTP
+          timeoutSeconds: 100
+          periodSeconds: 120
+          successThreshold: 1
+          failureThreshold: 20
+      serviceAccount: "activity"
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    openshift.io/host.generated: 'true'
+  name: backend
+  labels:
+    app: activity
+spec:
+  to:
+    kind: Service
+    name: activity
+    weight: 100
+  port:
+    targetPort: http
+  wildcardPolicy: None
+status:
+  ingress:
+    - routerName: default
+      conditions:
+        - type: Admitted
+          status: 'True'
+      wildcardPolicy: None
