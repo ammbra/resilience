@@ -61,7 +61,7 @@ spec:
               fieldPath: "metadata.namespace"
         - name: "WORKER_CLOUD_ID"
           value: "CEE"
-        image: "quay.io/anasandbox/activity:1.0.1"
+        image: "quay.io/anasandbox/activity:1.0.1-native"
         imagePullPolicy: "IfNotPresent"
         name: "activity"
         ports:
