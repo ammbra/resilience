@@ -3,6 +3,7 @@
 :home: https://github.com/ammbra/resilience
 
 * <<istio-examples, Istio Examples>>
+** <<simulate-trafic-with-load-balancing-and-locality-failover, Simulate trafic with load balancing and locality failover>>
 ** <<simulate-trafic-without-circuit-breaker-enabled, Simulate trafic without circuit breaker enabled>>
 ** <<simulate-trafic-with-circuit-breaker-enabled, Simulate trafic with circuit breaker enabled>>
 ** <<simulate-trafic-with-priority, Simulate trafic with priority >>
@@ -19,9 +20,9 @@ Please follow the instructions located https://redhat-scholars.github.io/istio-t
 Once you have Istio installed, you can run the examples.
 
 
-==== Simulate trafic with load balancing
+==== Simulate trafic with load balancing and locality failover
 
-Simply run {home}/tree/main/simulate-lb.sh[simulate-lb.sh] or try one by one its commands.
+Simply run {home}/tree/main/simulate-locality-failover.sh[simulate-locality-failover.sh] or try one by one its commands.
 
 
 ==== Simulate trafic without circuit breaker enabled
@@ -87,7 +88,7 @@ skupper init --console-auth unsecured -n benelux
 skupper token create token.yaml -t cert
 ----
 
-Do a similar installation of backend in the CEE and UKI namespaces:
+Do a similar installation of backend in the CEE, DACH and UKI namespaces:
 
 [source, shell-session]
 ----

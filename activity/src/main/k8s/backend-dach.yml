@@ -1,0 +1,67 @@
+---
+apiVersion: "v1"
+kind: "ServiceAccount"
+metadata:
+  labels:
+    app.kubernetes.io/name: "activity"
+    app.kubernetes.io/version: "1.0.0"
+  name: "activity"
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  labels:
+    app.kubernetes.io/name: "activity"
+    app.kubernetes.io/version: "1.0.0"
+  name: "activity"
+spec:
+  ports:
+  - name: "http"
+    port: 8080
+    targetPort: 8080
+  selector:
+    app.kubernetes.io/name: "activity"
+    app.kubernetes.io/version: "1.0.0"
+  type: "ClusterIP"
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  labels:
+    app.kubernetes.io/name: "activity"
+    app.kubernetes.io/version: "1.0.0"
+  name: "activity"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: "activity"
+      app.kubernetes.io/version: "1.0.0"
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: "activity"
+        app.kubernetes.io/version: "1.0.0"
+    spec:
+      containers:
+      - env:
+        - name: "KUBERNETES_NAMESPACE"
+          valueFrom:
+            fieldRef:
+              fieldPath: "metadata.namespace"
+        - name: "WORKER_CLOUD_ID"
+          value: "DACH"
+        image: "quay.io/anasandbox/activity:1.0.1"
+        imagePullPolicy: "IfNotPresent"
+        name: "activity"
+        ports:
+        - containerPort: 8080
+          name: "http"
+          protocol: "TCP"
+        - containerPort: 8778
+          name: jolokia
+          protocol: TCP
+        - containerPort: 9779
+          name: prometheus
+          protocol: TCP
+      serviceAccount: "activity"
