@@ -26,8 +26,7 @@ public class RandomHobbyResource {
     private final Bucket bucket;
 
 
-    private static final String ID = "worker-quarkus-" + UUID.randomUUID()
-            .toString().substring(0, 4);
+    private final String ID;
 
 
     @RestClient
@@ -36,6 +35,8 @@ public class RandomHobbyResource {
 
 
     public RandomHobbyResource() {
+        ID = "worker-quarkus-" + UUID.randomUUID()
+                .toString().substring(0, 4);
         Bandwidth limit = Bandwidth.classic(20, Refill.greedy(20, Duration.ofMinutes(1)));
         this.bucket = Bucket4j.builder()
                 .addLimit(limit)

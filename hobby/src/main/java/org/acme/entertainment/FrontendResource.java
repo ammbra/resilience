@@ -36,11 +36,11 @@ public class FrontendResource {
 
         this.data.addRequestId(requestId);
         final RandomHobby hobby = this.backendService.getActivity();
-        
+
         this.data.putResponse(requestId, hobby);
-        this.data.updateWorker(hobby.getWorkerId(), hobby.getCloudId());
+        this.data.updateWorker(hobby.workerId, hobby.cloudId);
         
-        return Response.status(202).build();
+        return Response.status(202).entity(this.data).build();
     }
 
     @GET
