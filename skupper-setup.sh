@@ -17,7 +17,7 @@ skupper init
 skupper link create token.yaml
 
 kubectl config set-context $(kubectl config current-context) --namespace=dach
-kubectl apply -f activity/src/main/k8s/backend-uki.yml -n dach
+kubectl apply -f activity/src/main/k8s/backend-dach.yml -n dach
 kubectl annotate service activity skupper.io/proxy=http -n dach
 skupper init
 skupper link create token.yaml

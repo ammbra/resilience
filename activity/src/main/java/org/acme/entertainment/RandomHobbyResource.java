@@ -3,7 +3,8 @@ package org.acme.entertainment;
 import io.github.bucket4j.*;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
-import org.jboss.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -18,7 +19,7 @@ import java.util.UUID;
 @Path("activity")
 public class RandomHobbyResource {
 
-    private final Logger logger = Logger.getLogger(getClass());
+    private static final Logger LOGGER = LoggerFactory.getLogger(RandomHobbyResource.class);
 
     @ConfigProperty(name = "worker.cloud.id", defaultValue = "unknown")
     String cloudId;
@@ -38,8 +39,8 @@ public class RandomHobbyResource {
         ID = "worker-quarkus-" + UUID.randomUUID()
                 .toString().substring(0, 4);
         Bandwidth limit = Bandwidth.classic(20, Refill.greedy(20, Duration.ofMinutes(1)));
-        this.bucket = Bucket4j.builder()
-                .addLimit(limit)
+
+        this.bucket = Bucket4j.builder().addLimit(limit)
                 .build();
     }
 
@@ -90,12 +91,9 @@ public class RandomHobbyResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getHobbyByKey(@PathParam("issue") String issue, @PathParam("key") long key) {
         return switch(issue){
-            case "timeout":
-                yield timeout(key);
-            case "notavailable":
-                yield invokeServiceUnavailable();
-            default:
-                yield Response.status(Response.Status.OK)
+            case "timeout" -> timeout(key);
+            case "notavailable" -> invokeServiceUnavailable();
+            default -> Response.status(Response.Status.OK)
                         .entity(service.getActivityByKey(key)).build();
         };
     }
