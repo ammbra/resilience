@@ -72,7 +72,7 @@ spec:
         - containerPort: 9779
           name: prometheus
           protocol: TCP
-      serviceAccount: "activity"
+      serviceAccountName: "activity"
 ---
 kind: Route
 apiVersion: route.openshift.io/v1

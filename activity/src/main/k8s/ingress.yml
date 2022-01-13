@@ -1,5 +1,5 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
 metadata:
   annotations:
     app.quarkus.io/build-timestamp: 2021-10-24 - 09:55:28 +0000
@@ -13,8 +13,8 @@ spec:
         paths:
           - backend:
               service:
-                name: activity
+                name: "activity"
                 port:
-                  name: http
-            path: /
+                  number: 8080
+            path: "/"
             pathType: Prefix

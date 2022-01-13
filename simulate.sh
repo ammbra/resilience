@@ -22,3 +22,5 @@ kubectl apply -f activity/src/main/k8s/destination-rule-activity-v1-v2.yml
 kubectl apply -f activity/src/main/k8s/virtual-service-activity-default.yml
 
 siege -r 10 -c 4 -v  $GATEWAY_URL/activity/timeout/5881028
+####Or you can use hey
+#### hey -n 10 -c 4 -z 30s "http://"$GATEWAY_URL/activity/timeout/5881028

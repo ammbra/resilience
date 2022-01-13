@@ -64,4 +64,4 @@ spec:
         - containerPort: 9779
           name: prometheus
           protocol: TCP
-      serviceAccount: "activity"
+      serviceAccountName: "activity"

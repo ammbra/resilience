@@ -77,11 +77,11 @@ spec:
             path: /healthy/living
             port: 80
             scheme: HTTP
-          timeoutSeconds: 100
+          timeoutSeconds: 110
           periodSeconds: 120
           successThreshold: 1
           failureThreshold: 20
-      serviceAccount: "activity"
+      serviceAccountName: "activity"
 ---
 kind: Route
 apiVersion: route.openshift.io/v1

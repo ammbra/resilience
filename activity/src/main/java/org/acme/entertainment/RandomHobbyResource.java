@@ -99,11 +99,11 @@ public class RandomHobbyResource {
     }
 
     private Response timeout(long key) {
-        logger.debug(String.format("Thread interrupted on %s", cloudId));
+        LOGGER.debug(String.format("Thread interrupted on %s", cloudId));
         try {
             Thread.sleep(2000);
         } catch (InterruptedException e) {
-            logger.info("Thread interrupted");
+            LOGGER.info("Thread interrupted");
         }
 
         return Response.status(Response.Status.GATEWAY_TIMEOUT)
@@ -111,7 +111,7 @@ public class RandomHobbyResource {
     }
 
     private Response invokeServiceUnavailable() {
-        logger.debug(String.format("Misbehaving %s", cloudId));
+        LOGGER.debug(String.format("Misbehaving %s", cloudId));
         return Response.status(Response.Status.SERVICE_UNAVAILABLE).build();
     }
 
