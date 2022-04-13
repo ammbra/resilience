@@ -1,7 +1,6 @@
 
 kubectl apply -f activity/src/main/k8s/backend-benelux-v2.yml
 
-kubectl apply -f activity/src/main/k8s/backend-faulty-probe.yml
 
 ####uncomment these lines if you are not using OpenShift####
 #kubectl apply -f <(istioctl kube-inject -f activity/src/main/k8s/backend-benelux-v2.yml)
@@ -20,6 +19,7 @@ kubectl delete destinationrule activity
 
 kubectl apply -f activity/src/main/k8s/destination-rule-lb-activity-v1-v2.yml
 kubectl apply -f activity/src/main/k8s/virtual-service-activity-default.yml
+kubectl apply -f activity/src/main/k8s/backend-faulty-probe.yml
 
 siege -r 10 -c 4 -v  $GATEWAY_URL/activity
 ####Or you can use hey
